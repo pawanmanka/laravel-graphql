@@ -5,7 +5,7 @@ declare(strict_types = 1);
 return [
     'route' => [
         // The prefix for routes; do NOT use a leading slash!
-        'prefix' => 'graphql',
+        'prefix' => 'api',
 
         // The controller/method to use in GraphQL request.
         // Also supported array syntax: `[\Rebing\GraphQL\GraphQLController::class, 'query']`
@@ -76,7 +76,7 @@ return [
         'default' => [
             'query' => [
                 'book' => App\GraphQL\Queries\BookQuery::class,
-                'books' => App\GraphQL\Queries\BooksQuery::class,
+                'books' => App\GraphQL\Queries\BooksQuery::class,                
             ],
             'mutation' => [
                 // Create a book
@@ -88,7 +88,7 @@ return [
             ],
             // The types only available in this schema
             'types' => [
-                'Book' => App\GraphQL\Types\BookType::class,
+                'Book' => App\GraphQL\Types\BookType::class,               
             ],
 
             // Laravel HTTP middleware
@@ -100,6 +100,23 @@ return [
             // An array of middlewares, overrides the global ones
             'execution_middleware' => null,
         ],
+        'auth' => [
+            'query' => [
+                'users' => App\GraphQL\Queries\UsersQuery::class,
+            ],
+            'mutation' => [
+                'login' => App\GraphQL\Mutations\Users\LoginUserMutation::class,
+                'register' => App\GraphQL\Mutations\Users\CreateUserMutation::class,
+            ],
+            'types'=>[
+                'User' => App\GraphQL\Types\UsersType::class,
+            ],
+            // Laravel HTTP middleware
+            'middleware' => null,
+
+            // Which HTTP methods to support; must be given in UPPERCASE!
+            'method' => ['GET', 'POST'],
+        ]
     ],
 
     // The global types available to all schemas.
